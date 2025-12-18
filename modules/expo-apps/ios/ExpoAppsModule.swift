@@ -1,4 +1,5 @@
 import ExpoModulesCore
+import SwiftUI
 import FamilyControls
 
 public class ExpoAppsModule: Module {
@@ -27,5 +28,23 @@ public class ExpoAppsModule: Module {
             }
         }
         
+        AsyncFunction("showPicker") { (promise: Promise) in
+            // Updating the UI using the main thread
+            DispatchQueue.main.async {
+                // Using Expo's util currentViewController to get the current view
+                guard let currentViewController = self.appContext?.utilities?.currentViewController() else {
+                    promise.reject("NO_ROOT_VC", "Cannot find current view controller")
+                    return
+                }
+                
+                let pickerView = ExpoAppsView()
+                let hostingController  = UIHostingController(rootView: pickerView)
+                
+                // present our View which is ExpoAppsView which will show a picker modal
+                currentViewController.present(hostingController, animated: true)
+                
+            }
+            
+        }
     }
 }

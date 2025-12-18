@@ -9,6 +9,12 @@ export default function HomeScreen() {
         title="Authorize"
         onPress={async () => await ExpoAppsModule.authorizeAsync()}
       />
+
+      {/* A new button to call showPicker */}
+      <Button
+        title="Show picker"
+        onPress={async () => await ExpoAppsModule.showPicker()}
+      />
     </View>
   );
 }
